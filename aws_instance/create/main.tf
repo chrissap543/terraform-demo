@@ -1,3 +1,4 @@
+
 terraform {
   required_providers {
     aws = {
@@ -10,14 +11,19 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-east-1"
+  region = "us-east-1"
 }
 
 resource "aws_instance" "app_server" {
-  ami           = "ami-830c94e3"
+  ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
 
   tags = {
     Name = "ExampleAppServerInstance"
   }
+}
+
+resource "aws_ec2_instance_state" "test" {
+  instance_id = aws_instance.app_server.id
+  state = "stopped"
 }
