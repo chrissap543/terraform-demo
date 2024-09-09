@@ -1,4 +1,3 @@
-
 terraform {
   required_providers {
     aws = {
@@ -8,6 +7,10 @@ terraform {
   }
 
   required_version = ">= 1.2.0"
+}
+
+locals {
+  shouldstop = false
 }
 
 provider "aws" {
@@ -23,7 +26,8 @@ resource "aws_instance" "app_server" {
   }
 }
 
-resource "aws_ec2_instance_state" "test" {
+resource "aws_ec2_instance_state" "stop" {
+  count = local.shouldstop ? 1 : 0
   instance_id = aws_instance.app_server.id
   state = "stopped"
 }
