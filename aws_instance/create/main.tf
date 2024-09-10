@@ -27,7 +27,7 @@ resource "aws_instance" "app_server" {
 }
 
 resource "aws_ec2_instance_state" "stop" {
-  count = local.shouldstop ? 1 : 0
+  count       = local.shouldstop ? 1 : 0
   instance_id = aws_instance.app_server.id
-  state = "stopped"
+  state       = "stopped"
 }
