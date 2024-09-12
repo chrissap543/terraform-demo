@@ -29,7 +29,8 @@ jobs:
         run: terraform validate
 
       - name: Plan Output
-        run: export GITHUB_ENV=$(terraform plan)
+        id: plan_output
+        run: terraform plan -no-color >> $GITHUB_OUTPUT
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -42,7 +43,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: process.env.GITHUB_ENV
+              body: ${{ steps.plan_output.outputs.*  }}
             })
         # name: Terraform Plan
         # run: terraform plan
