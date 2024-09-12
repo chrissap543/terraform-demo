@@ -40,3 +40,6 @@ jobs:
       with: 
         message: |
           Terraform plan output:
+          ```
+          ${{ steps.Terraform_Plan.outputs.stdout }}
+          ```
