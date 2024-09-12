@@ -40,6 +40,7 @@ jobs:
       
       - uses: actions/github-script@v6
         with: 
+          working-directory: aws_instance/create
           github-token: ${{ secrets.COMMENT_PAT }}
           script: |
             const process = require('process')
