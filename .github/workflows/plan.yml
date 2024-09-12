@@ -46,7 +46,7 @@ jobs:
     #       ```
     - uses: actions/github-script@v6
       with: 
-        echo ${{ steps.Terraform_Plan.outputs.stdout }}
+        echo: ${{ steps.Terraform_Plan.outputs.stdout }}
         script: |
           github.rest.issues.createComment({
             issue_number: context.issue.number,
