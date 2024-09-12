@@ -31,7 +31,7 @@ jobs:
       - name: Plan Output
         id: plan_output
         run: |
-          echo 'plan_output<<EOF' >> $GITHUB_OUTPUT
+          echo 'output<<EOF' >> $GITHUB_OUTPUT
           terraform plan -no-color >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
         env:
@@ -39,6 +39,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
       - uses: actions/github-script@v6
+        env:
+          PLAN_OUTPUT: ${{ steps.plan_output.outputs.output }}
         with: 
           github-token: ${{ secrets.COMMENT_PAT }}
           script: |
@@ -46,13 +48,8 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "${{ join(steps.plan_output.outputs.*, '\n') }}"
+              body: 
             })
-        # name: Terraform Plan
-        # run: terraform plan
-        # env:
-        #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         
       - run: terraform apply -auto-approve
         env: 
