@@ -10,7 +10,7 @@ terraform {
 }
 
 locals {
-  shouldstop = false
+  shouldstop = true
 }
 
 provider "aws" {
