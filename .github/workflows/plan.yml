@@ -37,10 +37,19 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     
-    - uses: thollander/actions-comment-pull-request@v2
+    # - uses: thollander/actions-comment-pull-request@v2
+    #   with: 
+    #     message: |
+    #       Terraform plan output:
+    #       ```
+    #       ${{ steps.Terraform_Plan.outputs.stdout }}
+    #       ```
+    - uses: actions/github-script@v6
       with: 
-        message: |
-          Terraform plan output:
-          ```
-          ${{ steps.Terraform_Plan.outputs.stdout }}
-          ```
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: ${{ steps.Terraform_Plan.outputs.stdout }}
+          })
