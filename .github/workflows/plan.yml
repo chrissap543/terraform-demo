@@ -48,9 +48,12 @@ jobs:
       with: 
         echo: ${{ steps.Terraform_Plan.outputs.stdout }}
         script: |
+          contents = ${{ steps.Terraform_Plan.outputs.stdout }}
           github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: ${{ steps.Terraform_Plan.outputs.stdout }}
+            body: {
+              "Terraform Plan Output": contents
+            }
           })
