@@ -3,6 +3,10 @@ on:
   pull_request: 
    branches:
      - "**"
+
+permissions: 
+   pull-requests: write 
+
 jobs:
   check:
     runs-on: ubuntu-latest
