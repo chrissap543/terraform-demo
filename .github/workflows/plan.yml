@@ -31,6 +31,7 @@ jobs:
       run: terraform validate
 
     - name: Terraform Plan
+      id: Terraform_Plan
       run: terraform plan
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
