@@ -40,12 +40,13 @@ jobs:
         with: 
           github-token: ${{ secrets.COMMENT_PAT }}
           script: |
-            const {readFile} = require('fs')
+            const fs = require('fs')
+            const fileContents = fs.readFileSync('./plan.txt').toString()
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: readFile('./plan.txt', 'utf8')
+              body: fileContents
             })
         
       - run: terraform apply -auto-approve
