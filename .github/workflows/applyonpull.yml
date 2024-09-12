@@ -31,24 +31,21 @@ jobs:
       - name: Plan Output
         id: plan_output
         run: |
-          echo 'output<<EOF' >> $GITHUB_OUTPUT
-          terraform plan -no-color >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
+          terraform plan -no-color >> plan.txt
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
       - uses: actions/github-script@v6
-        env:
-          PLAN_OUTPUT: ${{ steps.plan_output.outputs.output }}
         with: 
           github-token: ${{ secrets.COMMENT_PAT }}
           script: |
+            const {readFile} = require('fs')
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: process.env.PLAN_OUTPUT
+              body: readFile('./plan.txt', 'utf8')
             })
         
       - run: terraform apply -auto-approve
