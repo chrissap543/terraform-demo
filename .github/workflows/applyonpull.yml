@@ -1,8 +1,8 @@
 name: apply
 on:
-  pull_request: 
-    types: 
-      - closed
+    pull_request: 
+        types: 
+            - closed
 
 jobs:
     if_merged:
