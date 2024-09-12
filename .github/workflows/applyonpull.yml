@@ -30,7 +30,10 @@ jobs:
 
       - name: Plan Output
         id: plan_output
-        run: terraform plan -no-color >> $GITHUB_OUTPUT
+        run: |
+          echo 'var<<EOF' >> $GITHUB_OUTPUT
+          terraform plan -no-color >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
