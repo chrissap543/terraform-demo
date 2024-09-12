@@ -31,7 +31,7 @@ jobs:
       - name: Plan Output
         id: plan_output
         run: |
-          echo 'var<<EOF' >> $GITHUB_OUTPUT
+          echo 'plan_output<<EOF' >> $GITHUB_OUTPUT
           terraform plan -no-color >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
         env:
