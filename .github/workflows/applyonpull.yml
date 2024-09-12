@@ -32,6 +32,8 @@ jobs:
         id: plan_output
         run: |
           terraform plan -no-color >> plan.txt
+          pwd
+          ls -a
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
