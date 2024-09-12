@@ -1,5 +1,9 @@
 name: check terraform code
-on: [push]
+on: 
+  pull_request: 
+   branches:
+     - "**"
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -24,8 +28,16 @@ jobs:
       run: terraform validate
 
     - name: Terraform Plan
-      run: terraform plan
+      id: Terraform_Plan
+      run: terraform plan -no-color
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        
+    
+    # - uses: thollander/actions-comment-pull-request@v2
+    #   with: 
+    #     message: |
+    #       Terraform plan output:
+    #       ```
+    #       ${{ steps.Terraform_Plan.outputs.stdout }}
+    #       ```
