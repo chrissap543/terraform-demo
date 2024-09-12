@@ -30,6 +30,9 @@ jobs:
 
       - name: Plan Output
         run: terraform plan -lock=false >> $GITHUB_ENV
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
       - uses: actions/github-script@v6
         with: 
