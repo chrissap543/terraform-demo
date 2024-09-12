@@ -48,7 +48,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 
+              body: process.env.PLAN_OUTPUT
             })
         
       - run: terraform apply -auto-approve
