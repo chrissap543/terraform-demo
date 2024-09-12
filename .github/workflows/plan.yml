@@ -4,9 +4,6 @@ on:
    branches:
      - "**"
 
-permissions: 
-   pull-requests: write 
-
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -44,15 +41,3 @@ jobs:
     #       ```
     #       ${{ steps.Terraform_Plan.outputs.stdout }}
     #       ```
-    - uses: actions/github-script@v6
-      with:
-        script: |
-          contents = ${{ steps.Terraform_Plan.outputs.stdout }}
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: {
-              "Terraform Plan Output": String(contents)
-            }
-          })
