@@ -1,8 +1,8 @@
 name: apply
 on:
-    pull_request: 
-        types: 
-            - closed
+    push:
+      branches:
+        - main
 
 jobs:
     if_merged:
@@ -28,36 +28,17 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-      - name: Plan Output
-        id: plan_output
-        run: |
-          terraform plan -no-color >> plan.txt
-          pwd
-          ls -a
+      - name: Terraform Plan
+        run: terraform plan
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      
-      - uses: actions/github-script@v6
-        with: 
-          github-token: ${{ secrets.COMMENT_PAT }}
-          script: |
-            const process = require('process')
-            process.chdir('./aws_instance/create')
-            console.log(process.cwd())
-            const fs = require('fs')
-            const fileContents = fs.readFileSync('./plan.txt').toString()
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: fileContents
-            })
         
-      # - run: terraform apply -auto-approve
-      #   env: 
-      #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        env: 
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
             
                 
