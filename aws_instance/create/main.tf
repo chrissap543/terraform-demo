@@ -15,7 +15,7 @@ terraform {
 }
 
 locals {
-  num_of_instances = 5
+  num_of_instances = 3
 }
 
 provider "aws" {
