@@ -5,12 +5,17 @@ terraform {
       version = "~> 4.16"
     }
   }
+  backend "s3" {
+    bucket = "devops-demo-tfstate"
+    key    = "state/terraform.tfstate"
+    region = "us-east-1"
+  }
 
   required_version = ">= 1.2.0"
 }
 
 locals {
-  num_of_instances = 3
+  num_of_instances = 1
 }
 
 provider "aws" {
@@ -23,7 +28,7 @@ resource "aws_instance" "app_server" {
   count         = local.num_of_instances
 
   tags = {
-    Name = "ExampleAppServerInstance"
+    Name = "ExampleAppServerInstance-${count.index}"
   }
 }
 
