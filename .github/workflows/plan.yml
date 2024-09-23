@@ -36,13 +36,13 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Plan Json
-      run: terraform show -json plan.txt >> plan.json
+      run: |
+        ls
+        terraform show -json plan.txt >> plan.json
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
-    - name: Python Script
-      run: python check.py
 
     - uses: actions/github-script@v6
       with: 
