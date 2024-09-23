@@ -28,7 +28,7 @@ resource "aws_instance" "app_server" {
   count         = local.num_of_instances
 
   tags = {
-    # Name = "ExampleAppServerInstance-${count.index}"
+    Name = "ExampleAppServerInstance-${count.index}"
   }
 }
 
