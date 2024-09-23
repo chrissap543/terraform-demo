@@ -37,8 +37,8 @@ jobs:
 
     - name: Plan Json
       run: |
-        ls
-        terraform show -json plan.txt >> plan.json
+        terraform plan -out plan
+        terraform show -json plan >> plan.json
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
