@@ -15,7 +15,7 @@ terraform {
 }
 
 locals {
-  num_of_instances = "abc"
+  num_of_instances = 3
 }
 
 provider "aws" {
@@ -28,7 +28,7 @@ resource "aws_instance" "app_server" {
   count         = local.num_of_instances
 
   tags = {
-    Name = "ExampleAppServerInstance-${count.index}"
+    # Name = "ExampleAppServerInstance-${count.index}"
   }
 }
 
