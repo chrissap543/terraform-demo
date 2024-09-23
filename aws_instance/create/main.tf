@@ -15,8 +15,8 @@ terraform {
 }
 
 locals {
-  num_of_instances = 3
-
+  num_of_instances = "abc"
+}
 
 provider "aws" {
   region = "us-east-1"
