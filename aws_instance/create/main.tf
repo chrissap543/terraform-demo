@@ -31,9 +31,3 @@ resource "aws_instance" "app_server" {
     Name = "ExampleAppServerInstance-${count.index}"
   }
 }
-
-# resource "aws_ec2_instance_state" "stop" {
-#   count       = local.shouldstop ? 1 : 0
-#   instance_id = aws_instance.app_server.id
-#   state       = "stopped"
-# }
